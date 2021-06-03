@@ -65,13 +65,13 @@ from(numbers)
 ## Use with angular material
 
 ```typescript
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Notifier, INotifier } from "./index";
-import {Component} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+// notifier.service.ts
+import {Injectable} from "@angular/core";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Notifier, INotifier} from "rxnotify";
 
 class SnackbarNotifier implements INotifier {
-  constructor(private readonly _snackBar: MatSnackBar) {
+  constructor(private _snackBar: MatSnackBar) {
   }
 
   error(message: string): void {
@@ -100,11 +100,18 @@ class SnackbarNotifier implements INotifier {
 }
 
 @Injectable()
-class NotifierService extends Notifier {
-  constructor(private readonly _snackBar: MatSnackBar) {
+export class NotifierService extends Notifier {
+  constructor(private _snackBar: MatSnackBar) {
     super(new SnackbarNotifier(_snackBar));
   }
 }
+
+// app.controller.ts
+import {Component, OnInit} from '@angular/core';
+import {NotifierService} from "../services/notifier.service";
+import { HttpClient } from '@angular/common/http';
+import {catchError} from "rxjs/operators";
+import {EMPTY} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -132,6 +139,7 @@ export class AppComponent implements OnInit {
     })
   }
 }
+
 ```
 
 
