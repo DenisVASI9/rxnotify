@@ -1,9 +1,9 @@
 {
   "name": "rxnotify",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "rx notify operator for rxjs",
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "build": "tsc",
     "dev": "tsc -w",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
@@ -21,6 +21,6 @@
     "prettier": "^2.3.0"
   },
   "dependencies": {
-    "rxjs": "^7.1.0"
+    "rxjs": "~6.6.0"
   }
 }

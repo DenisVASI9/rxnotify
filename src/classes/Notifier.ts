@@ -1,6 +1,6 @@
 import { INotifier } from '../interfaces';
 import { ConsoleNotifier } from './ConsoleNotifier';
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 export class Notifier implements INotifier {
   constructor(private readonly notifier: INotifier) {}
@@ -9,7 +9,7 @@ export class Notifier implements INotifier {
     return new Notifier(useClass);
   }
 
-  error(...args: any[]) {
+  error(...args: any[])  {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({
@@ -28,7 +28,7 @@ export class Notifier implements INotifier {
     };
   }
 
-  notify(...args: any[]) {
+  notify(...args: any[])  {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({
@@ -47,7 +47,7 @@ export class Notifier implements INotifier {
     };
   }
 
-  success(...args: any[]) {
+  success(...args: any[])  {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({
@@ -66,7 +66,7 @@ export class Notifier implements INotifier {
     };
   }
 
-  warning(...args: any[]) {
+  warning(...args: any[])  {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({

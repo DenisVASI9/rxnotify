@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsoleNotifier = void 0;
-class ConsoleNotifier {
+export class ConsoleNotifier {
     error(...args) {
         console.error(...args);
     }
@@ -15,5 +12,4 @@ class ConsoleNotifier {
         console.warn(...args);
     }
 }
-exports.ConsoleNotifier = ConsoleNotifier;
 //# sourceMappingURL=ConsoleNotifier.js.map

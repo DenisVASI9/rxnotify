@@ -1,18 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Notifier = void 0;
-const ConsoleNotifier_1 = require("./ConsoleNotifier");
-const rxjs_1 = require("rxjs");
-class Notifier {
+import { ConsoleNotifier } from './ConsoleNotifier';
+import { Observable } from "rxjs";
+export class Notifier {
     constructor(notifier) {
         this.notifier = notifier;
     }
-    static createNotifier(useClass = new ConsoleNotifier_1.ConsoleNotifier()) {
+    static createNotifier(useClass = new ConsoleNotifier()) {
         return new Notifier(useClass);
     }
     error(...args) {
         return (source) => {
-            return new rxjs_1.Observable((subscriber) => {
+            return new Observable((subscriber) => {
                 source.subscribe({
                     next: (value) => {
                         this.notifier.error(...args);
@@ -30,7 +27,7 @@ class Notifier {
     }
     notify(...args) {
         return (source) => {
-            return new rxjs_1.Observable((subscriber) => {
+            return new Observable((subscriber) => {
                 source.subscribe({
                     next: (value) => {
                         this.notifier.notify(...args);
@@ -48,7 +45,7 @@ class Notifier {
     }
     success(...args) {
         return (source) => {
-            return new rxjs_1.Observable((subscriber) => {
+            return new Observable((subscriber) => {
                 source.subscribe({
                     next: (value) => {
                         this.notifier.success(...args);
@@ -66,7 +63,7 @@ class Notifier {
     }
     warning(...args) {
         return (source) => {
-            return new rxjs_1.Observable((subscriber) => {
+            return new Observable((subscriber) => {
                 source.subscribe({
                     next: (value) => {
                         this.notifier.warning(...args);
@@ -83,5 +80,4 @@ class Notifier {
         };
     }
 }
-exports.Notifier = Notifier;
 //# sourceMappingURL=Notifier.js.map

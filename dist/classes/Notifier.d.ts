@@ -1,5 +1,5 @@
 import { INotifier } from '../interfaces';
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 export declare class Notifier implements INotifier {
     private readonly notifier;
     constructor(notifier: INotifier);
