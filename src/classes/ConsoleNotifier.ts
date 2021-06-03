@@ -1,19 +1,19 @@
 import { INotifier } from '../interfaces';
 
 export class ConsoleNotifier implements INotifier {
-  error(...args): void {
+  error(...args: any[]): void {
     console.error(...args);
   }
 
-  notify(...args): void {
+  notify(...args: any[]): void {
     console.log(...args);
   }
 
-  success(...args): void {
+  success(...args: any[]): void {
     console.info(...args);
   }
 
-  warning(...args): void {
+  warning(...args: any[]): void {
     console.warn(...args);
   }
 }
