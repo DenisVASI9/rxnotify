@@ -1,6 +1,6 @@
 {
   "name": "rxnotify",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "rx notify operator for rxjs",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
