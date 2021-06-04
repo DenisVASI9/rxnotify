@@ -31,7 +31,7 @@ class CustomConsoleNotifier extends ConsoleNotifier {
 }
 
 const customNotifier = Notifier.createCustomNotifier<CustomNotifier>(
-  CustomConsoleNotifier,
+  new CustomConsoleNotifier(),
   CustomNotifier,
 );
 

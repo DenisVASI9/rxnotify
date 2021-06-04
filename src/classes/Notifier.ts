@@ -12,10 +12,10 @@ export class Notifier extends BaseNotifier implements INotifier {
   }
 
   static createCustomNotifier<T extends Notifier = Notifier>(
-    UseNotifierMethods = ConsoleNotifier,
+    UseNotifierMethods = new ConsoleNotifier(),
     UseNotifier: new (...args: any[]) => T,
   ): T {
-    return new UseNotifier(new UseNotifierMethods());
+    return new UseNotifier(UseNotifierMethods);
   }
 
   static NOTIFIER_ERROR = 'error';
