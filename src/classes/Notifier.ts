@@ -1,6 +1,6 @@
 import { INotifier } from '../interfaces';
 import { ConsoleNotifier } from './ConsoleNotifier';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 export class Notifier implements INotifier {
   constructor(private readonly notifier: INotifier) {}
@@ -9,12 +9,17 @@ export class Notifier implements INotifier {
     return new Notifier(useClass);
   }
 
-  error(...args: any[])  {
+  static NOTIFIER_ERROR = 'error';
+  static NOTIFIER_SUCCESS = 'success';
+  static NOTIFIER_NOTIFY = 'notify';
+  static NOTIFIER_WARNING = 'warning';
+
+  protected makeObservable(args, type) {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({
           next: (value) => {
-            this.notifier.error(...args);
+            this.callNotifier({ args, type });
             subscriber.next(value);
           },
           error(error) {
@@ -28,60 +33,19 @@ export class Notifier implements INotifier {
     };
   }
 
-  notify(...args: any[])  {
-    return <T>(source: Observable<T>): Observable<T> => {
-      return new Observable((subscriber) => {
-        source.subscribe({
-          next: (value) => {
-            this.notifier.notify(...args);
-            subscriber.next(value);
-          },
-          error(error) {
-            subscriber.error(error);
-          },
-          complete() {
-            subscriber.complete();
-          },
-        });
-      });
-    };
+  protected callNotifier({ args, type }) {
+    this.notifier[type]?.call(this, ...args);
   }
 
-  success(...args: any[])  {
-    return <T>(source: Observable<T>): Observable<T> => {
-      return new Observable((subscriber) => {
-        source.subscribe({
-          next: (value) => {
-            this.notifier.success(...args);
-            subscriber.next(value);
-          },
-          error(error) {
-            subscriber.error(error);
-          },
-          complete() {
-            subscriber.complete();
-          },
-        });
-      });
-    };
-  }
+  error = (...args: any[]) =>
+    this.makeObservable(args, Notifier.NOTIFIER_ERROR);
 
-  warning(...args: any[])  {
-    return <T>(source: Observable<T>): Observable<T> => {
-      return new Observable((subscriber) => {
-        source.subscribe({
-          next: (value) => {
-            this.notifier.warning(...args);
-            subscriber.next(value);
-          },
-          error(error) {
-            subscriber.error(error);
-          },
-          complete() {
-            subscriber.complete();
-          },
-        });
-      });
-    };
-  }
+  notify = (...args: any[]) =>
+    this.makeObservable(args, Notifier.NOTIFIER_NOTIFY);
+
+  success = (...args: any[]) =>
+    this.makeObservable(args, Notifier.NOTIFIER_SUCCESS);
+
+  warning = (...args: any[]) =>
+    this.makeObservable(args, Notifier.NOTIFIER_WARNING);
 }
