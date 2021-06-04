@@ -1,10 +1,9 @@
 import { Observable } from 'rxjs';
-import { INotifier } from '../interfaces';
 
 export class BaseNotifier {
-  constructor(protected readonly notifier: INotifier) {}
+  constructor(protected readonly notifier) {}
 
-  protected makeObservable(args, type) {
+  protected makeObservable(args, type: string) {
     return <T>(source: Observable<T>): Observable<T> => {
       return new Observable((subscriber) => {
         source.subscribe({

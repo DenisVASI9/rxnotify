@@ -7,15 +7,15 @@ export class Notifier extends BaseNotifier implements INotifier {
     super(notifier);
   }
 
-  static createNotifier(
-    useClass: INotifier = new ConsoleNotifier(),
-    CustomClass?: typeof Notifier,
-  ): Notifier {
-    if (CustomClass) {
-      return new CustomClass(useClass);
-    } else {
-      return new Notifier(useClass);
-    }
+  static createNotifier(UseNotifierMethods: INotifier = new ConsoleNotifier()) {
+    return new Notifier(UseNotifierMethods);
+  }
+
+  static createCustomNotifier<T extends Notifier = Notifier>(
+    UseNotifierMethods = ConsoleNotifier,
+    UseNotifier: new (...args: any[]) => T,
+  ): T {
+    return new UseNotifier(new UseNotifierMethods());
   }
 
   static NOTIFIER_ERROR = 'error';

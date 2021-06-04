@@ -142,5 +142,43 @@ export class AppComponent implements OnInit {
 
 ```
 
+## Create your custom notifier
+
+```typescript
+
+// A Notifier class for make observable notify method
+class CustomNotifier extends Notifier {
+  static CUSTOM_NOTIFIER = 'custom';
+
+  custom = (...args: any[]) =>
+    this.makeObservable(args, CustomNotifier.CUSTOM_NOTIFIER);
+}
+
+// A class with implementation of notification logic
+class CustomConsoleNotifier extends ConsoleNotifier {
+  custom(...args) {
+    console.log('Test of custom');
+  }
+}
+
+// Create
+const customNotifier = Notifier.createCustomNotifier<CustomNotifier>(
+  CustomConsoleNotifier,
+  CustomNotifier,
+);
+
+from(numbers)
+  .pipe(
+    notifier.error('Test of error'),
+    notifier.success('Test of success'),
+    notifier.notify('Test of notify'),
+    notifier.warning('Test of warning'),
+    customNotifier.custom(),
+  )
+  .subscribe((res) => {
+    console.log(res);
+  });
+```
+
 
 
