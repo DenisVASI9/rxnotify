@@ -1,9 +1,11 @@
 import { INotifier } from '../interfaces';
 import { ConsoleNotifier } from './ConsoleNotifier';
-import { Observable } from 'rxjs';
+import { BaseNotifier } from './BaseNotifier';
 
-export class Notifier implements INotifier {
-  constructor(private readonly notifier: INotifier) {}
+export class Notifier extends BaseNotifier implements INotifier {
+  constructor(protected readonly notifier: INotifier) {
+    super(notifier);
+  }
 
   static createNotifier(useClass: INotifier = new ConsoleNotifier()): Notifier {
     return new Notifier(useClass);
@@ -13,29 +15,6 @@ export class Notifier implements INotifier {
   static NOTIFIER_SUCCESS = 'success';
   static NOTIFIER_NOTIFY = 'notify';
   static NOTIFIER_WARNING = 'warning';
-
-  protected makeObservable(args, type) {
-    return <T>(source: Observable<T>): Observable<T> => {
-      return new Observable((subscriber) => {
-        source.subscribe({
-          next: (value) => {
-            this.callNotifier({ args, type });
-            subscriber.next(value);
-          },
-          error(error) {
-            subscriber.error(error);
-          },
-          complete() {
-            subscriber.complete();
-          },
-        });
-      });
-    };
-  }
-
-  protected callNotifier({ args, type }) {
-    this.notifier[type]?.call(this, ...args);
-  }
 
   error = (...args: any[]) =>
     this.makeObservable(args, Notifier.NOTIFIER_ERROR);

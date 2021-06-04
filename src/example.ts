@@ -3,6 +3,7 @@ import { Notifier } from './index';
 
 const numbers = [1, 2, 3, 4, 5];
 
+// Default
 const notifier = Notifier.createNotifier();
 
 from(numbers)
