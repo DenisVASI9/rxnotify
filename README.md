@@ -163,7 +163,7 @@ class CustomConsoleNotifier extends ConsoleNotifier {
 
 // Create
 const customNotifier = Notifier.createCustomNotifier<CustomNotifier>(
-  CustomConsoleNotifier,
+  new CustomConsoleNotifier(),
   CustomNotifier,
 );
 
